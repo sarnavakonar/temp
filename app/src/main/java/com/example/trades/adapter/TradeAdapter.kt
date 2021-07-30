@@ -27,7 +27,7 @@ class TradeAdapter(val trades: List<Trade>) : RecyclerView.Adapter<TradeAdapter.
             name.text = trade.symbol
             ltp.text = "${trade.ltp}"
             qty.text = "${trade.quantity}"
-            pbl.text = "${trade.avg_price}"
+            pbl.text = "${(trade.close - trade.ltp)*trade.quantity}"
         }
     }
 

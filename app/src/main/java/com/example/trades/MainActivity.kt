@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trades.adapter.TradeAdapter
 import com.example.trades.util.Status
 import com.example.trades.viewmodel.TradeViewModel
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         viewModel?.getTrades()?.observe(this, Observer {
             when(it?.status){
                 Status.SUCCESS -> {
+                    val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                    rv.layoutManager = linearLayoutManager
                     rv.adapter = TradeAdapter(it.data?.data!!)
                 }
                 Status.ERROR -> {
@@ -38,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        //showBottomSheet()
+        showBottomSheet()
     }
 
     private fun showBottomSheet() {
@@ -47,8 +50,9 @@ class MainActivity : AppCompatActivity() {
 
         bottomSheetDialog.setCancelable(false)
         bottomSheetDialog.setContentView(view)
+        bottomSheetDialog.setCanceledOnTouchOutside(true)
         val mBehavior = BottomSheetBehavior.from(view.getParent() as View)
-        mBehavior.setPeekHeight(24)
+        mBehavior.setPeekHeight(100)
         bottomSheetDialog.show()
     }
 }
